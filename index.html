@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nipen Dey - Portfolio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #071122;
+            color: #fff;
+            transition: background 0.3s, color 0.3s;
+            padding-bottom: 60px;
+        }
+
+        /* ProgressBar */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            background: #00d9ff;
+            z-index: 99999;
+        }
+
+        /* Theme Toggle */
+        #themeToggle {
+            position: fixed;
+            right: 25px;
+            top: 100px;
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            background: #00d9ff;
+            cursor: pointer;
+            font-size: 22px;
+            box-shadow: 0 0 20px #00d9ff;
+            z-index: 999;
+            display: block;
+        }
+
+        /* Light Mode Styles */
+        .light-mode {
+            background: #f5f5f5;
+            color: #111;
+        }
+        .light-mode section, .light-mode footer {
+            color: #111;
+        }
+        .light-mode .contact-info {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.5);
+        }
+        .light-mode .contact-info p {
+            color: #333;
+        }
+        .light-mode .contact-form input, .light-mode .contact-form textarea {
+            background: rgba(0, 0, 0, 0.06);
+            color: #111;
+        }
+
+        /* Navigation & Menu */
+        nav {
+            background: #0b1a30;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 32px;
+            color: #00d9ff;
+            cursor: pointer;
+        }
+
+        /* Sections and Reveal Animation */
+        section {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: 1s;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #00d9ff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Hero / Profile Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #00d9ff;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+            align-items: center;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, .05);
+            padding: 35px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 217, 255, .25);
+        }
+
+        .contact-info h3 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin: 18px 0;
+            color: #ddd;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 16px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .contact-form textarea {
+            resize: none;
+        }
+
+        .contact-form button {
+            padding: 16px;
+            border: none;
+            background: #00d9ff;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .contact-form button:hover {
+            box-shadow: 0 0 25px #00d9ff;
+            transform: translateY(-4px);
+        }
+
+        /* Footer */
+        footer {
+            background: #050c18;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        footer h2 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            font-size: 30px;
+            color: #00d9ff;
+            transition: .3s;
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            nav { padding: 20px; }
+            .menu-btn {
+                display: block;
+            }
+            nav ul {
+                position: absolute;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                background: #071122;
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 0;
+                transition: .5s;
+                z-index: 1000;
+            }
+            nav ul.active {
+                left: 0;
+            }
+            nav ul li {
+                margin: 20px 0;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="progressBar"></div>
+    <button id="themeToggle">🌙</button>
+
+    <nav>
+        <div class="logo">Nipen Dey</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-btn" id="menuBtn">☰</div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <img src="1000048274.png" alt="Nipen Dey" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+        <h1>Hi, I'm Nipen Dey</h1>
+        <p style="margin-top: 10px; color: #00d9ff;">Student • Python Learner • Future Software Engineer</p>
+        <a href="assets/resume.pdf" target="_blank" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #00d9ff; color: #000; text-decoration: none; font-weight: bold; border-radius: 8px;">View Resume</a>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Let's Connect</h3>
+                <p><strong>Email:</strong> nipendey123@gmail.com</p>
+                <p><strong>Instagram:</strong> @niiiipen</p>
+                <p><strong>YouTube:</strong> @niiiipen</p>
+                <p><strong>GitHub:</strong> Nipendey0</p>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject">
+                <textarea rows="6" placeholder="Write your message..." required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <h2>Nipen Dey</h2>
+        <p>Student • Python Learner • Future Software Engineer</p>
+        <div class="footer-social">
+            <a href="https://github.com/Nipendey0" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/niiiipen" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@niiiipen" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="margin-top: 20px;">&copy; 2026 Nipen Dey. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Premium Mobile Menu
+        const menuBtn = document.getElementById("menuBtn");
+        const navMenu = document.querySelector("nav ul");
+        menuBtn.onclick = () => {
+            navMenu.classList.toggle("active");
+        };
+
+        // Theme Toggle Button
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.onclick = () => {
+            document.body.classList.toggle("light-mode");
+            themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+        };
+
+        // Scroll Progress Bar
+        window.addEventListener("scroll", () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById("progressBar").style.width = progress + "%";
+        });
+
+        // Scroll Reveal Animation
+        const reveals = document.querySelectorAll("section");
+        window.addEventListener("scroll", () => {
+            reveals.forEach(sec => {
+                const top = sec.getBoundingClientRect().top;
+                if (top < window.innerHeight - 120) {
+                    sec.classList.add("active");
+                }
+            });
+        });
+        // Initial setup for animation classes
+        reveals.forEach(sec => sec.classList.add("reveal"));
+
+        // Form Submit Popup
+        const form = document.querySelector(".contact-form");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Thank you! Your message has been received.");
+            form.reset();
+        });
+    </script>
+</body>
+  </html>
+  
